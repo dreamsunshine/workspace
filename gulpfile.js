@@ -12,6 +12,7 @@ var gulp=require('gulp'),
 	cache=require('gulp-cache'),
 	plumber=require('gulp-plumber');
 
+var resource=['js/*.min.js'];
 gulp.task('lesstocss',function(){
 	return gulp.src('css/*.less')
 		.pipe(plumber({errorHandler:notify.onError('Error:<%= error.message %>')}))
@@ -41,27 +42,36 @@ gulp.task('jsmini',function(){
 		.pipe(notify({message:'jsmini task complete'}))
 })
 
+gulp.task('resourceto',function(){
+	return gulp.src(resource)
+		.pipe(gulp.dest('dist/js'))
+		.pipe(notify({message:'resourceto task complete'}))
+})
+
 gulp.task('imgmini',function(){
 	return gulp.src('img/*')
-		.pipe(plumber({errorHandler:notify.onError('Error:<%= error.message %>')}))
-		.pipe(imagemin({optimizationLevel:5,progressive:true,interlaced:true}))
+//		.pipe(plumber({errorHandler:notify.onError('Error:<%= error.message %>')}))
+//		.pipe(imagemin({optimizationLevel:5,progressive:true,interlaced:true}))
 		.pipe(gulp.dest('dist/img'))
 		.pipe(notify({message:'imgmini task complete'}))
 })
 
 gulp.task('clean',function(cb){
-	del(['dist/css','dist/js','dist/img'],cb);
+	del(['dist/css/','dist/js/','dist/img/'],cb);
 })
 
-gulp.task('default',['clean'],function(){
-	gulp.start('cssmini','jsmini','imgmini');
+gulp.task('default',function(){
+	gulp.start('cssmini','jsmini','imgmini','resourceto','watch');
 })
 
 gulp.task('watch',function(){
 	gulp.watch('css/*.less',['lesstocss']);
 	gulp.watch('js/*.js',['jsmini']);
 	gulp.watch('img/*',['imgmini']);
+	gulp.watch('css/*.css',['cssmini']);
+	gulp.watch('js/*.min.js',['resourceto']);
 	livereload.listen();
 	gulp.watch(['css/*','js/*','img/*']).on('change',livereload.changed);
 	gulp.watch('dist/**').on('change',livereload.changed);
+	gulp.watch('*.html').on('change',livereload.changed);
 })
