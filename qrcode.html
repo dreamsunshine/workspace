@@ -37,11 +37,34 @@
 		</section>
 		<section>
 			<div class="qrcode">
-				<img class="img-responsive" src="dist/img/qrcode.jpg" alt="个人二维码"/>
+				<img class="img-responsive" src="" alt="个人二维码"/>
 			</div>
 			<p class="qrtip">请在服务台扫描二维码入场~</p>
 		</section>
-		<script src="dist/js/jquery.min.js"></script>
+		<script src="dist/js/zepto.min.js"></script>
 		<script src="dist/js/main.min.js"></script>
+		<script type="text/javascript">
+			Zepto(function(){
+				var userid=window.sessionStorage.getItem('userid');
+				var imgurl=host+'/t98/pages/Login/getQRCode.do?callback=?&code='+userid;
+				var idurl=host + '/t98/pages/TappUser/editUserInfo.do?callback=?',iddata={userId:userid,type:2};
+				getdata(idurl,iddata,function(data){
+					if (data.cardNum) {
+						$('.qrcode img').addClass('validate');
+					}else{
+						$('.qrcode img').addClass('unvalidate');
+					}
+				})
+				var img=new Image();
+				img.src=imgurl;
+				if (img.complete) {
+					$('.qrcode img').attr('src',imgurl);
+				} else{
+					img.onload=function(){
+						$('.qrcode img').attr('src',imgurl);
+					}
+				}
+			})
+		</script>
 	</body>
 </html>

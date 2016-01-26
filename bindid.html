@@ -1,24 +1,118 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="Description" content="T98微信"/>
-		<meta name="Keywords" content="T98微信"/>
+		<meta name="Description" content="T98微信" />
+		<meta name="Keywords" content="T98微信" />
 		<title>T98</title>
-		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css"/>
+		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css" />
 	</head>
+
 	<body>
 		<section>
 			<form id="idform">
 				<div class="group">
-					<div class="idput idborder"><label for="idname">姓名</label><input type="text" id="idname" name="idname" placeholder="请输入姓名" /></div>
-					<div class="idput"><label for="idnumber">身份证号</label><input type="text" id="idnumber" name="idnumber" placeholder="请输入身份证号" /></div>
+					<div class="idput idborder">
+						<label for="idname">姓名</label>
+						<input type="text" id="idname" name="idname" placeholder="请输入姓名" />
+					</div>
+					<div class="idput">
+						<label for="idnumber">身份证号</label>
+						<input type="text" id="idnumber" name="idnumber" placeholder="请输入身份证号" />
+					</div>
 				</div>
 				<p class="idtip">确认后，信息将无法修改</p>
 				<button type="submit" class="btn idbtn">确认</button>
 			</form>
 		</section>
+		<div class="dialog fade" id="dialog">
+			<div class="dialog-body">
+				<div class="dialog-header">
+					<span class="dialog-headclose">X</span>
+					<h4 class="dialog-headtitle">title</h4>
+				</div>
+				<div class="dialog-content">
+					content
+				</div>
+				<div class="dialog-footer">
+					<div class="dialog-footclose">close</div>
+					<div class="dialog-footsubmit">submit</div>
+				</div>
+			</div>
+		</div>
+		<script src="dist/js/zepto.min.js"></script>
+		<script src="dist/js/main.min.js"></script>
+		<script src="dist/js/dialog.min.js"></script>
+		<script type="text/javascript">
+			Zepto(function() {
+				$('.dialog-footsubmit').hide();
+				var namereg = /^[\u4E00-\u9FA5]+$/,
+					idnumreg = /(^\d{15}$)|(^\d{17}([0-9]|X)$)/;
+				$('.btn').on('click', function(e) {
+					e.preventDefault();
+					var idname = $('#idname').val(),
+						idnumber = $('#idnumber').val(),
+						userid = window.sessionStorage.getItem('userid');
+					var checkurl = host + '/t98/pages/TappUser/editUserInfo.do?callback=?';
+					var iddata = {
+						userId: userid,
+						type: 1,
+						name: idname,
+						cardNum: idnumber
+					};
+					if (!namereg.test(idname)) {
+						new dialog($('#dialog'), {
+							backdrop: false,
+							show: true,
+							type: 'alert',
+							autohide: false,
+							title: '身份证绑定',
+							content: '姓名填写不正确，请重新填写'
+						});
+						return false;
+					}
+					if (!idnumreg.test(idnumber)) {
+						new dialog($('#dialog'), {
+							backdrop: false,
+							show: true,
+							type: 'alert',
+							autohide: false,
+							title: '身份证绑定',
+							content: '身份证号填写不正确，请重新填写'
+						});
+						return false;
+					}
+					getdata(checkurl, iddata, function(data) {
+						if (data.rescode != 0) {
+							new dialog($('#dialog'), {
+								backdrop: false,
+								show: true,
+								type: 'alert',
+								autohide: false,
+								title: '身份证绑定',
+								content: '绑定失败'
+							});
+							return false;
+						}
+						var userphone = data.userPhone,
+							cardnum = data.cardNum;
+						new dialog($('#dialog'), {
+							backdrop: false,
+							show: true,
+							type: 'alert',
+							autohide: false,
+							title: '身份证绑定',
+							content: '绑定成功'
+						});
+						$('#idname,#idnumber,.btn').attr('disabled', 'disabled');
+						$('.btn').css('color', 'gray');
+					})
+				})
+			})
+		</script>
 	</body>
+
 </html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta name="Description" content="T98微信"/>
-		<meta name="Keywords" content="T98微信"/>
+		<meta name="Description" content="T98微信" />
+		<meta name="Keywords" content="T98微信" />
 		<title>T98</title>
 		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css" />
 	</head>
+
 	<body>
 		<div class="setuptip" id="setuptip">
 			<div class="setuptip_sub1">
@@ -35,13 +37,13 @@
 					<li>
 						<a href="qrcode.html">
 							<div class="navimg">
-							<div class="navimg_parent">
-								<img class="img-responsive" src="dist/img/qrcodebtn.png" alt="我的二维码" />
+								<div class="navimg_parent">
+									<img class="img-responsive" src="dist/img/qrcodebtn.png" alt="我的二维码" />
+								</div>
 							</div>
-						</div>
-						<p class="navtext">我的二维码</p>
+							<p class="navtext">我的二维码</p>
 						</a>
-						
+
 					</li>
 				</ul>
 			</nav>
@@ -53,25 +55,25 @@
 						<img class="img-responsive" src="dist/img/setup.png" alt="设置" />
 					</div>
 				</a>
-				
+
 				<div class="info">
 					<div class="infopic">
 						<img class="img-responsive" src="dist/img/headimg.png" alt="头像" />
 					</div>
 				</div>
-				<p class="infoname">David</p>
-				<p class="infops">位置：<span>门将</span></p>
+				<p class="infoname"></p>
+				<p class="infops">位置：<span></span></p>
 				<ul class="infosum clearfix">
 					<li>
-						<p>20</p>
+						<p>0</p>
 						<p>总比赛场次</p>
 					</li>
 					<li>
-						<p>20</p>
+						<p>0</p>
 						<p>总进球数</p>
 					</li>
 					<li>
-						<p>20</p>
+						<p>0</p>
 						<p>总助攻数</p>
 					</li>
 				</ul>
@@ -79,73 +81,76 @@
 			<nav class="ranknav">
 				<ul class="sumranks clearfix">
 					<li class="active">最佳球员排行</li>
-					<li>最佳球员排行</li>
-					<li>最佳球员排行</li>
+					<li>最佳金手套排行</li>
+					<li>最佳射手排行</li>
+					<li>最佳助攻王排行</li>
 				</ul>
-				<a href="" class="prev"><</a>
-				<a href="" class="next">></a>
+				<a href="" class="prev">
+					<</a>
+						<a href="" class="next">></a>
 			</nav>
 			<ul class="ranktitle clearfix">
 				<li class="ranks">排名</li>
 				<li class="rankperson">球员</li>
-				<li class="ranknum">MVP次数</li>
+				<li class="ranknum">票数</li>
 			</ul>
 			<div class="result">
+				<div class="nodata">暂未开放</div>
 				<ul class="ranktitle clearfix">
 					<li>
 						<div class="ranks">
-							1
+							0
 						</div>
 						<div class="rankperson">
 							<div class="rankperson_pic">
 								<img class="img-responsive" src="dist/img/headimg.png" alt="头像" />
 							</div>
-							<p class="rankperson_name">贝克汉姆</p>
+							<p class="rankperson_name"></p>
 						</div>
 						<div class="ranknum">
-							19
+
 						</div>
 					</li>
 					<li>
 						<div class="ranks">
-							1
+							0
 						</div>
 						<div class="rankperson">
 							<div class="rankperson_pic">
 								<img class="img-responsive" src="dist/img/headimg.png" alt="头像" />
 							</div>
-							<p class="rankperson_name">贝克汉姆</p>
+							<p class="rankperson_name"></p>
 						</div>
 						<div class="ranknum">
-							19
+
 						</div>
 					</li>
 					<li>
 						<div class="ranks">
-							1
+							0
 						</div>
 						<div class="rankperson">
 							<div class="rankperson_pic">
 								<img class="img-responsive" src="dist/img/headimg.png" alt="头像" />
 							</div>
-							<p class="rankperson_name">贝克汉姆</p>
+							<p class="rankperson_name"></p>
 						</div>
 						<div class="ranknum">
-							19
+
 						</div>
 					</li>
 					<li class="rank_self">
 						<div class="ranks">
-							1
+							0
 						</div>
 						<div class="rankperson">
 							<div class="rankperson_pic">
 								<img class="img-responsive" src="dist/img/headimg.png" alt="头像" />
 							</div>
-							<p class="rankperson_name">贝克汉姆</p>
+							<p class="rankperson_name"></p>
 						</div>
 						<div class="ranknum">
-							19
+
 						</div>
 					</li>
 				</ul>
@@ -153,5 +158,152 @@
 		</section>
 		<script src="dist/js/zepto.min.js"></script>
 		<script src="dist/js/main.min.js"></script>
+		<script>
+			Zepto(function() {
+				var localuserid = window.sessionStorage.getItem('userid');
+				var enternum = window.localStorage.getItem('enternum');
+				if (enternum) {
+					$('.setuptip').hide();
+				} else {
+					$('.setuptip').css('opacity', '1').find('.setuptip_sub2,.setuptip_sub3').addClass('slide-enter');
+					window.localStorage.setItem('enternum', 1);
+				}
+				$('.setuptip').click(function(e) {
+					e.preventDefault();
+					$(this).toggle();
+				});
+				$('.setuptip').swipe(function(e) {
+					e.preventDefault();
+				});
+				var code = getQueryString('code'),
+					useridg;
+				var inurl = host + '/t98/pages/TappUser/authorization.do?callback=?',
+					inrankurl = host + '/t98/pages/TappUser/weChatMyData.do?callback=?',
+					codedata = {
+						code: code
+					};
+				var pic_w = $('.infopic').width();
+				$('.infopic').height(pic_w);
+				$('.infopic img').css({
+					'overflow': 'hidden',
+					'max-height': pic_w - 4
+				});
+
+				function getperson(data) {
+					var rescode = data.rescode;
+					if (rescode == 0) {
+						var userid = data.myUserId,
+							username = data.userName,
+							userpic = data.userPic,
+							goodposition = parseInt(data.goodPosition),
+							matchcount = data.matchCount,
+							goalcount = data.goalCount,
+							assistcount = data.assistCount,
+							userphone = data.userPhone,
+							realname = data.realName,
+							cardnum = data.cardNum;
+						$('.main a').attr('href', 'bindinfo.html?userphone=' + userphone + '&cardnum=' + cardnum);
+						useridg = userid;
+						!window.sessionStorage.getItem('userid') && window.sessionStorage.setItem('userid', userid);
+						picmiddle($('.infopic'), userpic, pic_w);
+						$('.infoname').html(username);
+						var gposition = ['中锋', '左边锋', '右边锋', '前腰', '左前卫', '右前卫', '后腰', '中后卫', '左后卫', '右后卫'];
+						goodposition ? $('.infops span').html(gposition[goodposition - 1]) : $('.infops span').html('暂无');
+						$('.infosum li').eq(0).find('p').eq(0).html(matchcount);
+						$('.infosum li').eq(1).find('p').eq(0).html(goalcount);
+						$('.infosum li').eq(2).find('p').eq(0).html(assistcount);
+						var ranklist = data.list1,
+							len = ranklist.length;
+						if ($('.result .ranktitle').is(':hidden')) {
+							$('.result .ranktitle').show(100);
+						}
+						for (var i = 0; i < len; i++) {
+							(function(j) {
+								$('.result .ranktitle li').eq(j).find('.ranks').html(ranklist[j].ranking);
+								$('.result .ranktitle li').eq(j).find('.rankperson_pic img').attr('src', ranklist[j].userPic);
+								$('.result .ranktitle li').eq(j).find('.rankperson_name').html(ranklist[j].userName);
+								$('.result .ranktitle li').eq(j).find('.ranknum').html(ranklist[j].votingNum);
+							})(i);
+						}
+					}
+				}
+				if (localuserid) {
+					var localrankdata = {
+						myUserId: localuserid,
+						rankType: 0
+					};
+					getdata(inrankurl, localrankdata, function(data) {
+						getperson(data);
+					})
+				} else {
+					getdata(inurl, codedata, function(data) {
+						getperson(data);
+					})
+				}
+				var bestnum = ['票数', '扑救数', '进球数', '助攻数'];
+
+				function rankdata(dr) {
+					var i = dr == 'next' ? 1 : -1;
+					var index = $('.sumranks li.active').index();
+					if ($('.result .ranktitle').is(':hidden')) {
+						$('.result .ranktitle').show(100);
+					}
+					if ($('.nodata').is(':visible')) {
+						$('.nodata').hide(100);
+					}
+					if (dr == 'next') {
+						if (index == 3) {
+							return false;
+						}
+						$('.sumranks li').eq(index).removeClass('active').next().addClass('active');
+						$('.ranknav+.ranktitle .ranknum').html(bestnum[index + i]);
+						if (index == 0) {
+							$('.nodata').show(100);
+							$('.result .ranktitle').hide(100);
+							return false;
+						}
+					} else {
+						if (index == 0) {
+							return false;
+						}
+						$('.sumranks li').eq(index).removeClass('active').prev().addClass('active');
+						$('.ranknav+.ranktitle .ranknum').html(bestnum[index + i]);
+						if (index == 2) {
+							$('.nodata').show(100);
+							$('.result .ranktitle').hide(100);
+							return false;
+						}
+					}
+					var rankdata = {
+						myUserId: useridg,
+						rankType: index + i
+					};
+					getdata(inrankurl, rankdata, function(data) {
+						var rescode = data.rescode;
+						if (rescode == 0) {
+							var ranklist = data.list1,
+								len = ranklist.length;
+							for (var i = 0; i < len; i++) {
+								(function(j) {
+									$('.result .ranktitle li').eq(j).find('.ranks').html(ranklist[j].ranking);
+									$('.result .ranktitle li').eq(j).find('.rankperson_pic img').attr('src', ranklist[j].userPic);
+									$('.result .ranktitle li').eq(j).find('.rankperson_name').html(ranklist[j].userName);
+									$('.result .ranktitle li').eq(j).find('.ranknum').html(ranklist[j].votingNum);
+								})(i);
+							}
+						}
+					})
+				}
+				$('.prev').on('click', function(e) {
+					e.preventDefault();
+					rankdata('prev');
+				})
+				$('.next').on('click', function(e) {
+					e.preventDefault();
+					rankdata('next');
+				})
+			});
+		</script>
 	</body>
+
 </html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="Description" content="T98微信"/>
-		<meta name="Keywords" content="T98微信"/>
+		<meta name="Description" content="T98微信" />
+		<meta name="Keywords" content="T98微信" />
 		<title>T98</title>
-		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css"/>
+		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css" />
 	</head>
+
 	<body>
 		<section>
 			<ul class="group grouptop">
@@ -38,5 +40,40 @@
 				</li>
 			</ul>
 		</section>
+		<script src="dist/js/zepto.min.js"></script>
+		<script src="dist/js/main.min.js"></script>
+		<script type="text/javascript">
+			Zepto(function() {
+				var userid = window.sessionStorage.getItem('userid');
+				var bindurl = host + '/t98/pages/TappUser/editUserInfo.do?callback=?',
+					binddata = {
+						userId: userid,
+						type: 2
+					};
+				getdata(bindurl, binddata, function(data) {
+					var userphone = data.userPhone,
+						cardnum = data.cardNum;
+					if (userphone) {
+						$('.group li').eq(0).find('a').addClass('active');
+						$('.group li').eq(0).find('a>span').eq(0).html('已绑定');
+					}
+					if (cardnum) {
+						$('.group li').eq(1).find('a').addClass('active');
+						$('.group li').eq(1).find('a>span').eq(0).html('已绑定');
+					}
+				})
+				$('.groupright').eq(0).on('click', function(e) {
+					if ($(this).hasClass('active')) {
+						e.preventDefault();
+					}
+				})
+				$('.groupright').eq(1).on('click', function(e) {
+					if ($(this).hasClass('active')) {
+						e.preventDefault();
+					}
+				})
+			})
+		</script>
 	</body>
+
 </html>

@@ -1,23 +1,172 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="Description" content="T98微信"/>
-		<meta name="Keywords" content="T98微信"/>
+		<meta name="Description" content="T98微信" />
+		<meta name="Keywords" content="T98微信" />
 		<title>T98</title>
-		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css"/>
+		<link rel="stylesheet" type="text/css" href="dist/css/main.min.css" />
 	</head>
+
 	<body>
 		<section>
 			<form id="phoneform">
 				<div class="group">
-					<div class="idput idborder"><label for="phoneNo">手机号</label><input type="text" id="phoneNo" name="phoneNo" placeholder="请输入手机号" /><button type="button" id="sendvl">获取验证码</button></div>
-					<div class="idput"><label for="phonevl">验证码</label><input type="text" id="phonevl" name="phonevl" placeholder="请输入验证码" /></div>
+					<div class="idput idborder">
+						<label for="phoneNo">手机号</label>
+						<input type="text" id="phoneNo" name="phoneNo" placeholder="请输入手机号" />
+						<button type="button" id="sendvl">获取验证码</button>
+					</div>
+					<div class="idput">
+						<label for="phonevl">验证码</label>
+						<input type="text" id="phonevl" name="phonevl" placeholder="请输入验证码" />
+					</div>
 				</div>
 				<button type="submit" class="btn phonebtn">确认</button>
 			</form>
 		</section>
+		<div class="dialog fade" id="dialog">
+			<div class="dialog-body">
+				<div class="dialog-header">
+					<span class="dialog-headclose">X</span>
+					<h4 class="dialog-headtitle">title</h4>
+				</div>
+				<div class="dialog-content">
+					content
+				</div>
+				<div class="dialog-footer">
+					<div class="dialog-footclose">close</div>
+					<div class="dialog-footsubmit">submit</div>
+				</div>
+			</div>
+		</div>
+		<script src="dist/js/zepto.min.js"></script>
+		<script src="dist/js/main.min.js"></script>
+		<script src="dist/js/dialog.min.js"></script>
+		<script>
+			Zepto(function() {
+				$('.dialog-footsubmit').hide();
+				var userid = window.sessionStorage.getItem('userid')
+				var phonereg = /^1[3|4|5|7|8]\d{9}$/; //手机验证
+				$('#sendvl').on('click', function(e) {
+					if ($(this).hasClass('active')) {
+						return false;
+					}
+					var _that = $(this);
+					var phone = $('#phoneNo').val();
+					var msgurl = host + '/t98/pages/TappUser/senMsg.do?callback=?';
+					var msgdata = {
+						userId: userid,
+						userPhone: phone,
+						type: 0
+					};
+					if (!phonereg.test(phone)) {
+						new dialog($('#dialog'), {
+							backdrop: false,
+							show: true,
+							type: 'alert',
+							autohide: false,
+							title: '手机号绑定',
+							content: '手机号不正确，请重新填写'
+						});
+						return false;
+					} else {
+						$(this).addClass('active');
+						getdata(msgurl, msgdata, function(data) {
+							_that.html('已发送');
+							var timer = 60;
+							var againtimer = setInterval(function() {
+								_that.html(timer + '秒后重新获取');
+								timer--;
+								if (timer <= 0) {
+									_that.removeClass('active');
+									_that.html('获取验证码');
+									clearInterval(againtimer);
+								}
+							}, 1000);
+						})
+					}
+				})
+				$('.btn').on('click', function(e) {
+					e.preventDefault();
+					var phone = $('#phoneNo').val(),
+						checkcode = $('#phonevl').val();
+					var checkurl = host + '/t98/pages/TappUser/checkCode.do?callback=?';
+					var msgdata = {
+						userPhone: phone,
+						type: 0,
+						checkCode: checkcode
+					};
+					var bindurl = host + '/t98/pages/TappUser/editUserInfo.do?callback=?',
+						binddata = {
+							userId: userid,
+							type: 0,
+							userPhone: phone
+						};
+					if (!phonereg.test(phone)) {
+						new dialog($('#dialog'), {
+							backdrop: false,
+							show: true,
+							type: 'alert',
+							autohide: false,
+							title: '手机号绑定',
+							content: '手机号不正确，请重新填写'
+						});
+						return false;
+					}
+					if ($.trim(checkcode).length < 1) {
+						new dialog($('#dialog'), {
+							backdrop: false,
+							show: true,
+							type: 'alert',
+							autohide: false,
+							title: '手机号绑定',
+							content: '验证码不能为空'
+						});
+						return false;
+					}
+					getdata(checkurl, msgdata, function(data) {
+						if (data.rescode != 0) {
+							new dialog($('#dialog'), {
+								backdrop: false,
+								show: true,
+								type: 'alert',
+								autohide: false,
+								title: '手机号绑定',
+								content: '验证码不正确，请重新填写'
+							});
+							return false;
+						}
+						getdata(bindurl, binddata, function(data) {
+							if (data.rescode != 0) {
+								new dialog($('#dialog'), {
+									backdrop: false,
+									show: true,
+									type: 'alert',
+									autohide: false,
+									title: '手机号绑定',
+									content: '绑定失败'
+								});
+								return false;
+							}
+							new dialog($('#dialog'), {
+								backdrop: false,
+								show: true,
+								type: 'alert',
+								autohide: false,
+								title: '手机号绑定',
+								content: '绑定成功'
+							});
+							$('#phoneNo,#phonevl,#sendvl,.btn').attr('disabled', 'disabled');
+							$('.btn,#sendvl').css('color', 'gray');
+						})
+					})
+				})
+			})
+		</script>
 	</body>
+
 </html>

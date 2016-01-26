@@ -1,28 +1,46 @@
-Zepto(function($) {
-	$('.setuptip').css('opacity', '1').find('.setuptip_sub2,.setuptip_sub3').addClass('slide-enter');
-	$('.setuptip').tap(function(e) {
-		e.preventDefault();
-		$(this).toggle();
-	});
-	$('.setuptip').swipe(function(e) {
-		e.preventDefault();
-	});
-	var pic_w = $('.infopic').width();
-	$('.infopic').height(pic_w);
-	//	$('.infopic img').attr('src','').css('background-image','url(./dist/img/qrcodebtn.png)')
-	function picmiddle(obj, url, w) {
-		var img = new Image();
-		img.src = url;
-		if (img.complete) {
+//获得url参数
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r !== null) return unescape(r[2]);
+	return null;
+}
 
-		} else {
-			img.onload = function() {
-				var pw = img.width,
-					ph = img.height;
-				if (pw < w - 4) {
-					obj.find('img').css('margin-top', (w - 4 - ph) / 2 + 'px').attr('src', url);
-				}
-			};
+//请求数据地址
+var host = 'http://tt98.tunnel.qydev.com';
+//ajax处理数据及回调
+function getdata(url, indata, callback) {
+	$.ajax({
+		type: "get",
+		url: url,
+		data: indata,
+		dataType: 'jsonp',
+		success: function(data) {
+			callback(data);
+		},
+		error: function(xhr, errorType, error) {
+			console.log(error);
 		}
+	});
+}
+//处理图片垂直居中
+function imgevent(obj, url, w, img) {
+	var pw = img.width,
+		ph = img.height;
+	if (pw>ph) {
+		obj.find('img').css('margin-top', (w - 4 - ph*w/pw) / 2 + 'px').attr('src', url);
+	} else {
+		obj.find('img').attr('src', url);
 	}
-});
+}
+function picmiddle(obj, url, w) {
+	var img = new Image();
+	img.src = url;
+	if (img.complete) {
+		imgevent(obj, url, w, img);
+	} else {
+		img.onload = function() {
+			imgevent(obj, url, w, img);
+		};
+	}
+}

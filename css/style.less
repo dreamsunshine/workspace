@@ -68,6 +68,14 @@ body{
 		label{
 			color: @fc;
 			width: percentage(224/560);
+			float: left;
+			&[for="phoneNo"]{
+				padding-top: 3%;
+			}
+		}
+		#phoneNo{
+			float: left;
+			padding-top: 3%;
 		}
 		input{
 			width: percentage(1-(224/560));
@@ -99,13 +107,13 @@ body{
 			padding-bottom: percentage(10/600);
 		}
 		label{
-			width: percentage(180/560);
+			width: percentage(150/560);
 		}
 		#phoneNo{
 			width: percentage(240/560);
 		}
 		button{
-			width: percentage(140/560);
+			width: percentage(170/560);
 			background-color: @btnc;
 			font-size: 1.2rem;
 			line-height: 1;
@@ -130,14 +138,15 @@ body{
 		.groupleft_icon{
 			display: inline-block;
 			width: percentage(80/572);
+			max-width: 20px;
 		}
 		.groupleft_info{
 			display: inline-block;
 			font-size: 1.3rem;
-			line-height: 1;
+			line-height: 1.8;
 			color: @fcd;
 			margin-left: percentage(68/572);
-			vertical-align: text-top;
+			vertical-align: top;
 		}
 	}
 	.groupright{
@@ -151,13 +160,13 @@ body{
 			display: inline-block;
 			&:first-of-type{
 				font-size: 1.1rem;
-				line-height: 1;
+				line-height: 2;
 				color: @pc;
-				vertical-align: text-top;
+				vertical-align: top;
 			}
 			&:last-of-type{
 				font-size: 3rem;
-				line-height: 0.4;
+				line-height: 0.6;
 				color: @fcl;
 				margin-left: percentage(12/286);
 				vertical-align: baseline;
@@ -177,6 +186,7 @@ body{
 	left: 0;
 	right: 0;
 	background-color: @navc;
+	z-index: 50;
 	li{
 		float: left;
 		width: 50%;
@@ -204,13 +214,17 @@ body{
 	width: percentage(420/640);
 	margin: 0 auto;
 	padding-top: percentage(157/640);
-	border: 5px solid transparent;
-	&.unvalidate{
-		border-color: red;
+	min-height: 280px;
+	img{
+		border: 5px solid transparent;
+		&.unvalidate{
+			border-color: red;
+		}
+		&.validate{
+			border-color: green;
+		}
 	}
-	&.validate{
-		border-color: green;
-	}
+	
 }
 .qrtip{
 	font-size: 1.5rem;
@@ -219,6 +233,7 @@ body{
 	margin-top: percentage(152/640);
 }
 .head{
+	background-image: -webkit-gradient(linear,0% 0%, 100% 0%,color-stop(5%,#2e526d),color-stop(25%,#4d89aa),to(#222538));
 	background-image: -webkit-linear-gradient(to right,#2e526d 5%,#4d89aa 25%,#222538);
 	background-image: linear-gradient(to right,#2e526d 5%,#4d89aa 25%,#222538);
 	padding-bottom: percentage(22/640);
@@ -238,6 +253,7 @@ body{
 			background-color: @wh;
 			border-radius: 100%;
 			margin: 0 auto;
+			min-height: 73px;
 			img{
 				border-radius: 100%;
 			}
@@ -247,6 +263,7 @@ body{
 	.infoname{
 		font-size: 1.4rem;
 		margin-top: percentage(20/640);
+		min-height: 14px;
 	}
 	.infops{
 		font-size: 1.1rem;
@@ -273,6 +290,7 @@ body{
 	}
 }
 .ranknav{
+	background-image: -webkit-gradient(linear,0% 0%, 100% 0%,color-stop(5%,#2a3845),color-stop(25%,#283a49),to(#1c1b26));
 	background: -webkit-linear-gradient(to right,#2a3845 5%,#283a49 25%,#1c1b26);
 	background: linear-gradient(to right,#2a3845 5%,#283a49 25%,#1c1b26);
 	padding: percentage(24/640) 0;
@@ -298,7 +316,9 @@ body{
 		top: percentage(12/38);
 		border: 1px solid @wh;
 		border-radius: 100%;
-		padding: 0 percentage(4/640);
+		width: 14px;
+		text-align: center;
+		line-height: 1;
 	}
 	.prev{
 		left: percentage(45/640);
@@ -329,21 +349,20 @@ body{
 .result{
 	background-color: @wh;
 	margin: 0 percentage(20/640);
+	.nodata{
+		display: none;
+		font-size: 2.0rem;
+		line-height: 2.5;
+		text-align: center;
+	}
 	.ranktitle{
 		padding: 0;
+		display: none;
 		li{
 			width: 100%;
 			padding: percentage(14/600) 0;
 			border-bottom: 1px solid @bc;
-			display: -webkit-box;
-			display: -moz-box;
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			-webkit-align-items: center;
-			        align-items: center;
-			-webkit-justify-content: center;
-			        justify-content: center;
+			
 			&:first-of-type{
 				.ranks{
 					color: @btnc;
@@ -379,22 +398,15 @@ body{
 			}
 			.ranks{
 				font-size: 1.8rem;
-//				padding-top: percentage(10/600);
+				line-height: 2;
 			}
 			.ranknum{
 				font-size: 1.5rem;
+				line-height: 2.4;
 				color: @wh - @wh;
 			}
 			.rankperson{
-				display: -webkit-box;
-				display: -moz-box;
-				display: -ms-flexbox;
-				display: -webkit-flex;
-				display: flex;
-				-webkit-align-items: center;
-				        align-items: center;
-				-webkit-justify-content: center;
-				        justify-content: center;
+				
 				.rankperson_pic{
 					float: left;
 					width: percentage(126/296);
@@ -409,6 +421,7 @@ body{
 					color: @wh - @wh;
 					text-align: left;
 					font-size: 1.3rem;
+					line-height: 2.8;
 				}
 			}
 		}
@@ -469,4 +482,90 @@ body{
 .slide-enter{
 	-webkit-transform: translateX(0);
 			transform: translateX(0);
+}
+.dialog{
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1100;
+	display: none;
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+	outline: 0;
+}
+.active{
+	display: block;
+}
+.dialog-backdrop{
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1000;
+	background: #000;
+}
+.dialog-backdrop.on{
+	opacity: 0.5;
+	filter:alpha(opacity=50);
+}
+.dialog .dialog-body{
+	position: relative;
+	overflow: hidden;
+	margin: 0 auto;
+	margin-top: 100px;
+	width: 60%;
+	background: #fff;
+	-webkit-box-shadow:0 5px 15px rgba(0,0,0,.5);
+			box-shadow:0 5px 15px rgba(0,0,0,.5); 
+}
+.dialog .dialog-body .dialog-header{
+	position: relative;
+	overflow: hidden;
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.dialog-header .dialog-headclose{
+	float: right;
+	font-size: 20px;
+	line-height: 1;
+	color: #000;
+	cursor: pointer;
+}
+.dialog-header .dialog-headtitle{
+	font-size: 16px;
+	line-height: 1;
+}
+.dialog-content{
+	position: relative;
+	padding: 15px;
+}
+.dialog-footer{
+	position: relative;
+	padding: 15px;
+	border-top: 1px solid #e5e5e5;
+	text-align: right;
+}
+.dialog-footer .dialog-footclose,.dialog-footer .dialog-footsubmit{
+	display: inline-block;
+	padding: 6px 12px;
+	font-size: 18px;
+	line-height: 1;
+	vertical-align: middle;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 4px;
+	margin: auto 5px;
+}
+.dialog-footer .dialog-footclose{
+	color: #333;
+	background: #fff;
+	border: 1px solid #ccc;
+}
+.dialog-footer .dialog-footsubmit{
+	color: #333;
+	background: #fff;
+	border: 1px solid #ccc;
 }
