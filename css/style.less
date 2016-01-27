@@ -363,22 +363,22 @@ body{
 			padding: percentage(14/600) 0;
 			border-bottom: 1px solid @bc;
 			
-			&:first-of-type{
+			&.rank1{
 				.ranks{
 					color: @btnc;
 				}
 			}
-			&:nth-of-type(2){
+			&.rank2{
 				.ranks{
 					color: @btnc + #29161a;
 				}
 			}
-			&:nth-of-type(3){
+			&.rank3{
 				.ranks{
 					color: @btnc + #583b40;
 				}
 			}
-			&:last-of-type,.rank_self{
+			&.rank_self{
 				border-bottom: none;
 				background-color: @btnc;
 				.ranks{
@@ -411,6 +411,7 @@ body{
 					float: left;
 					width: percentage(126/296);
 					padding: 0 percentage(35/296);
+					min-height: 28px;
 					img{
 						border-radius: 100%;
 					}

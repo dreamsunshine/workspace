@@ -354,30 +354,26 @@ body {
   padding: 2.33333333% 0;
   border-bottom: 1px solid #dfdfdf;
 }
-.result .ranktitle li:first-of-type .ranks {
+.result .ranktitle li.rank1 .ranks {
   color: #005f8b;
 }
-.result .ranktitle li:nth-of-type(2) .ranks {
+.result .ranktitle li.rank2 .ranks {
   color: #2975a5;
 }
-.result .ranktitle li:nth-of-type(3) .ranks {
+.result .ranktitle li.rank3 .ranks {
   color: #589acb;
 }
-.result .ranktitle li:last-of-type,
-.result .ranktitle li .rank_self {
+.result .ranktitle li.rank_self {
   border-bottom: none;
   background-color: #005f8b;
 }
-.result .ranktitle li:last-of-type .ranks,
-.result .ranktitle li .rank_self .ranks {
+.result .ranktitle li.rank_self .ranks {
   color: #fff;
 }
-.result .ranktitle li:last-of-type .ranknum,
-.result .ranktitle li .rank_self .ranknum {
+.result .ranktitle li.rank_self .ranknum {
   color: #fff;
 }
-.result .ranktitle li:last-of-type .rankperson .rankperson_name,
-.result .ranktitle li .rank_self .rankperson .rankperson_name {
+.result .ranktitle li.rank_self .rankperson .rankperson_name {
   color: #fff;
 }
 .result .ranktitle li div {
@@ -396,6 +392,7 @@ body {
   float: left;
   width: 42.56756757%;
   padding: 0 11.82432432%;
+  min-height: 28px;
 }
 .result .ranktitle li .rankperson .rankperson_pic img {
   border-radius: 100%;
