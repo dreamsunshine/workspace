@@ -139,7 +139,7 @@
 
 						</div>
 					</li>
-					<li class="rank_self">
+					<li>
 						<div class="ranks">
 							0
 						</div>
@@ -176,7 +176,8 @@
 					e.preventDefault();
 				});
 				var code = getQueryString('code'),
-					useridg;
+					useridg,
+					ranks = ['rank1', 'rank2', 'rank3', 'rank_self'];
 				var inurl = host + '/t98/pages/TappUser/authorization.do?callback=?',
 					inrankurl = host + '/t98/pages/TappUser/weChatMyData.do?callback=?',
 					codedata = {
@@ -188,6 +189,22 @@
 					'overflow': 'hidden',
 					'max-height': pic_w - 4
 				});
+
+				function rank(ranklist,len) {
+					$('.result .ranktitle li:visible').hide();
+					for (var i = 0; i < len; i++) {
+						(function(j) {
+							$('.result .ranktitle li').eq(j).show(100).attr('class', ranks[j]);
+							$('.result .ranktitle li').eq(j).find('.ranks').html(ranklist[j].ranking);
+							$('.result .ranktitle li').eq(j).find('.rankperson_pic img').attr('src', ranklist[j].userPic);
+							$('.result .ranktitle li').eq(j).find('.rankperson_name').html(ranklist[j].userName);
+							$('.result .ranktitle li').eq(j).find('.ranknum').html(ranklist[j].votingNum);
+							if (j < 3 && useridg == ranklist[j].userId) {
+								$('.result .ranktitle li').eq(j).attr('class', ranks[3]);
+							}
+						})(i);
+					}
+				}
 
 				function getperson(data) {
 					var rescode = data.rescode;
@@ -217,14 +234,7 @@
 						if ($('.result .ranktitle').is(':hidden')) {
 							$('.result .ranktitle').show(100);
 						}
-						for (var i = 0; i < len; i++) {
-							(function(j) {
-								$('.result .ranktitle li').eq(j).find('.ranks').html(ranklist[j].ranking);
-								$('.result .ranktitle li').eq(j).find('.rankperson_pic img').attr('src', ranklist[j].userPic);
-								$('.result .ranktitle li').eq(j).find('.rankperson_name').html(ranklist[j].userName);
-								$('.result .ranktitle li').eq(j).find('.ranknum').html(ranklist[j].votingNum);
-							})(i);
-						}
+						rank(ranklist,len);
 					}
 				}
 				if (localuserid) {
@@ -283,14 +293,7 @@
 						if (rescode == 0) {
 							var ranklist = data.list1,
 								len = ranklist.length;
-							for (var i = 0; i < len; i++) {
-								(function(j) {
-									$('.result .ranktitle li').eq(j).find('.ranks').html(ranklist[j].ranking);
-									$('.result .ranktitle li').eq(j).find('.rankperson_pic img').attr('src', ranklist[j].userPic);
-									$('.result .ranktitle li').eq(j).find('.rankperson_name').html(ranklist[j].userName);
-									$('.result .ranktitle li').eq(j).find('.ranknum').html(ranklist[j].votingNum);
-								})(i);
-							}
+							rank(ranklist,len);
 						}
 					})
 				}
