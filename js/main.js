@@ -7,7 +7,8 @@ function getQueryString(name) {
 }
 
 //请求数据地址
-var host = 'http://tt98.tunnel.qydev.com';
+//var host = 'http://tt98.tunnel.qydev.com';
+var host='http://121.41.33.76:8180/t98test/pages';
 //ajax处理数据及回调
 function getdata(url, indata, callback) {
 	$.ajax({

@@ -46,8 +46,8 @@
 		<script type="text/javascript">
 			Zepto(function(){
 				var userid=window.sessionStorage.getItem('userid');
-				var imgurl=host+'/t98/pages/Login/getQRCode.do?callback=?&code='+userid;
-				var idurl=host + '/t98/pages/TappUser/editUserInfo.do?callback=?',iddata={userId:userid,type:2};
+				var imgurl=host+'/Login/getQRCode.do?callback=?&code='+userid;
+				var idurl=host + '/TappUser/editUserInfo.do?callback=?',iddata={userId:userid,type:2};
 				getdata(idurl,iddata,function(data){
 					if (data.cardNum) {
 						$('.qrcode img').addClass('validate');

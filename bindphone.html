@@ -57,7 +57,7 @@
 					}
 					var _that = $(this);
 					var phone = $('#phoneNo').val();
-					var msgurl = host + '/t98/pages/TappUser/senMsg.do?callback=?';
+					var msgurl = host + '/TappUser/senMsg.do?callback=?';
 					var msgdata = {
 						userId: userid,
 						userPhone: phone,
@@ -94,13 +94,13 @@
 					e.preventDefault();
 					var phone = $('#phoneNo').val(),
 						checkcode = $('#phonevl').val();
-					var checkurl = host + '/t98/pages/TappUser/checkCode.do?callback=?';
+					var checkurl = host + '/TappUser/checkCode.do?callback=?';
 					var msgdata = {
 						userPhone: phone,
 						type: 0,
 						checkCode: checkcode
 					};
-					var bindurl = host + '/t98/pages/TappUser/editUserInfo.do?callback=?',
+					var bindurl = host + '/TappUser/editUserInfo.do?callback=?',
 						binddata = {
 							userId: userid,
 							type: 0,
